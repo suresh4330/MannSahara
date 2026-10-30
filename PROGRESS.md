@@ -1,6 +1,25 @@
 # Progress Log
 
-## Current status: Phase 6, done
+## Current status: Phase 7, done
+
+## Phase 7: router and pipeline (2026-10-30)
+- Completed: Implemented router.py with Pipeline class and build_pipeline(). Guaranteed Level 3 requests bypass the Coping Agent LLM entirely, return deterministic crisis messages with verified helplines from config, and produce a simulated counselor handoff. Implemented output guardrails fallback to safe templates on unsafe generation and state reset per conversation. Added tests/test_router.py with spy Coping Agent that raises if called at Level 3. Full pytest suite passed (41 passed).
+- Files changed:
+  - router.py
+  - tests/test_router.py
+  - PROGRESS.md
+  - PROJECT_PLAN.md
+- Commands run and REAL output (paste, do not paraphrase):
+  $ pytest tests/test_router.py -q
+  ....                                                                     [100%]
+  4 passed in 0.15s
+
+  $ pytest -q
+  .........................................                                [100%]
+  41 passed in 5.94s
+- Blockers / decisions needed: None.
+- Not yet verified: Phase 8.
+- Next phase: Phase 8 (Evaluation harness, test_log.csv, metrics, ablation).
 
 ## Phase 6: Coping Agent and output guardrail (2026-10-30)
 - Completed: Implemented agents/coping_agent.py with constrained system prompt for levels 0-2 (never diagnoses, prescribes, claims therapist role, or promises outcomes). Implemented agents/guardrail.py with compiled regex patterns (diagnosis, medication, method_detail, false_contact_claim, therapist_claim, minimizing, empty, too_long). Added tests/test_guardrail.py verifying positive/negative pairs for every pattern, confirming all fixed templates and 4 coping techniques pass, and that false contact claims are blocked (9 passed).
