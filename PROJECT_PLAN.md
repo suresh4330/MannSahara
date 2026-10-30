@@ -49,7 +49,7 @@ Source spec: MannSahara_Implementation_Guide.pdf (primary). Date created: 2026-1
 | 1 | Config, fixed templates, simulated tools | pytest tests/test_resources.py | done |
 | 2 | Synthetic dataset (dev + held-out) | pytest tests/test_dataset.py | done |
 | 3 | Rules layer (English + Hinglish) | pytest tests/test_rules.py | done |
-| 4 | LLM client and classifier | pytest tests/test_classifier.py | todo |
+| 4 | LLM client and classifier | pytest tests/test_classifier.py | done |
 | 5 | Tracker and Safety Gateway | pytest tests/test_tracker.py tests/test_hybrid.py | todo |
 | 6 | Coping Agent and output guardrail | pytest tests/test_guardrail.py | todo |
 | 7 | Router and pipeline | pytest tests/test_router.py | todo |

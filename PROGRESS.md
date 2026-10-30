@@ -1,6 +1,58 @@
 # Progress Log
 
-## Current status: Phase 3, done
+## Current status: Phase 4, done
+
+## Phase 4: LLM client and classifier (2026-10-30)
+- Completed: Implemented agents/schemas.py (LLMRisk, GatewayResult, TurnResult), agents/llm_client.py (provider-neutral supporting OpenRouter, Ollama, Anthropic, OpenAI, Gemini, and Mock), agents/classifier.py with system prompt, markdown code-fence parsing, and retry handling. Tested with tests/test_classifier.py (5 passed). Ran live smoke test on 5 messages using real backend (openrouter / meta-llama/llama-3.3-70b-instruct) with 100% accurate classification across Levels 0, 1, 2, 3, and hyperbole trap.
+- Files changed:
+  - agents/schemas.py
+  - agents/llm_client.py
+  - agents/classifier.py
+  - tests/test_classifier.py
+  - scratch/live_smoke_classifier.py
+  - PROGRESS.md
+  - PROJECT_PLAN.md
+- Commands run and REAL output (paste, do not paraphrase):
+  $ pytest tests/test_classifier.py -q
+  .....                                                                    [100%]
+  5 passed in 0.08s
+
+  $ python scratch/live_smoke_classifier.py
+  Running live smoke test with real backend: openrouter (model: meta-llama/llama-3.3-70b-instruct)
+  ============================================================
+  [1] Message: "Hey, how do I prepare for my DBMS midterm exam?"
+      Risk Level: 0
+      Signals: ['academic_stress', 'exam_anxiety']
+      Confidence: 0.8
+      Third Person: False
+  ------------------------------------------------------------
+  [2] Message: "I haven't been sleeping well and feel really down."
+      Risk Level: 1
+      Signals: ['sleep disturbance', 'feeling down']
+      Confidence: 0.8
+      Third Person: False
+  ------------------------------------------------------------
+  [3] Message: "I've felt completely hopeless for weeks and stopped going to any classes."
+      Risk Level: 2
+      Signals: ['hopelessness', 'withdrawal']
+      Confidence: 0.8
+      Third Person: False
+  ------------------------------------------------------------
+  [4] Message: "I want to end my life tonight, I can't take it anymore."
+      Risk Level: 3
+      Signals: ['suicidal thoughts', 'hopelessness']
+      Confidence: 1.0
+      Third Person: False
+  ------------------------------------------------------------
+  [5] Message: "This exam is killing me lol, dying to go home!"
+      Risk Level: 0
+      Signals: ['exam stress', 'idiomatic language']
+      Confidence: 0.9
+      Third Person: False
+  ------------------------------------------------------------
+- Blockers / decisions needed: None.
+- Not yet verified: Phase 5.
+- Next phase: Phase 5 (Tracker and Safety Gateway).
 
 ## Dataset review sign-off
 - Held-out SHA-256: 67720ebbe08699bb07e72733d2a6aaaae3d32482ec3e5e256c1b027b70878ef4
