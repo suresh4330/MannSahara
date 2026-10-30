@@ -54,7 +54,7 @@ Source spec: MannSahara_Implementation_Guide.pdf (primary). Date created: 2026-1
 | 6 | Coping Agent and output guardrail | pytest tests/test_guardrail.py | done |
 | 7 | Router and pipeline | pytest tests/test_router.py | done |
 | 8 | Evaluation harness, test_log.csv, metrics, ablation | python -m evaluation.run_eval --split dev | done |
-| 9 | Streamlit demo | App starts; manual walkthrough logged | todo |
+| 9 | Streamlit demo | App starts; manual walkthrough logged | done |
 | 10 | Held-out run, README, report, final checklist | Section 11 checklist fully ticked | todo |
 
 ## Risks and open questions
