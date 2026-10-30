@@ -1,6 +1,23 @@
 # Progress Log
 
-## Current status: Phase 4, done
+## Current status: Phase 5, done
+
+## Phase 5: tracker and Safety Gateway (2026-10-30)
+- Completed: Implemented agents/tracker.py with RiskTracker implementing T0 (crisis latch), T1 (persistence: M of last W turns >= 1 -> Level 2), and T2 (repetition: N turns of Level 2 -> Level 3 latched). Implemented agents/safety_gateway.py with combine_scores() and SafetyGateway combining rules + LLM scores, resilience fallback on LLM failure, and context tracking. Tested with tests/test_tracker.py and tests/test_hybrid.py (7 passed).
+- Files changed:
+  - agents/tracker.py
+  - agents/safety_gateway.py
+  - tests/test_tracker.py
+  - tests/test_hybrid.py
+  - PROGRESS.md
+  - PROJECT_PLAN.md
+- Commands run and REAL output (paste, do not paraphrase):
+  $ pytest tests/test_tracker.py tests/test_hybrid.py -q
+  .......                                                                  [100%]
+  7 passed in 0.16s
+- Blockers / decisions needed: None.
+- Not yet verified: Phase 6.
+- Next phase: Phase 6 (Coping Agent and output guardrail).
 
 ## Phase 4: LLM client and classifier (2026-10-30)
 - Completed: Implemented agents/schemas.py (LLMRisk, GatewayResult, TurnResult), agents/llm_client.py (provider-neutral supporting OpenRouter, Ollama, Anthropic, OpenAI, Gemini, and Mock), agents/classifier.py with system prompt, markdown code-fence parsing, and retry handling. Tested with tests/test_classifier.py (5 passed). Ran live smoke test on 5 messages using real backend (openrouter / meta-llama/llama-3.3-70b-instruct) with 100% accurate classification across Levels 0, 1, 2, 3, and hyperbole trap.
