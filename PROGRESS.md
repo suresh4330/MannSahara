@@ -1,6 +1,22 @@
 # Progress Log
 
-## Current status: Phase 5, done
+## Current status: Phase 6, done
+
+## Phase 6: Coping Agent and output guardrail (2026-10-30)
+- Completed: Implemented agents/coping_agent.py with constrained system prompt for levels 0-2 (never diagnoses, prescribes, claims therapist role, or promises outcomes). Implemented agents/guardrail.py with compiled regex patterns (diagnosis, medication, method_detail, false_contact_claim, therapist_claim, minimizing, empty, too_long). Added tests/test_guardrail.py verifying positive/negative pairs for every pattern, confirming all fixed templates and 4 coping techniques pass, and that false contact claims are blocked (9 passed).
+- Files changed:
+  - agents/coping_agent.py
+  - agents/guardrail.py
+  - tests/test_guardrail.py
+  - PROGRESS.md
+  - PROJECT_PLAN.md
+- Commands run and REAL output (paste, do not paraphrase):
+  $ pytest tests/test_guardrail.py -q
+  .........                                                                [100%]
+  9 passed in 0.14s
+- Blockers / decisions needed: None.
+- Not yet verified: Phase 7.
+- Next phase: Phase 7 (Router and pipeline).
 
 ## Phase 5: tracker and Safety Gateway (2026-10-30)
 - Completed: Implemented agents/tracker.py with RiskTracker implementing T0 (crisis latch), T1 (persistence: M of last W turns >= 1 -> Level 2), and T2 (repetition: N turns of Level 2 -> Level 3 latched). Implemented agents/safety_gateway.py with combine_scores() and SafetyGateway combining rules + LLM scores, resilience fallback on LLM failure, and context tracking. Tested with tests/test_tracker.py and tests/test_hybrid.py (7 passed).

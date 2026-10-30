@@ -51,7 +51,7 @@ Source spec: MannSahara_Implementation_Guide.pdf (primary). Date created: 2026-1
 | 3 | Rules layer (English + Hinglish) | pytest tests/test_rules.py | done |
 | 4 | LLM client and classifier | pytest tests/test_classifier.py | done |
 | 5 | Tracker and Safety Gateway | pytest tests/test_tracker.py tests/test_hybrid.py | done |
-| 6 | Coping Agent and output guardrail | pytest tests/test_guardrail.py | todo |
+| 6 | Coping Agent and output guardrail | pytest tests/test_guardrail.py | done |
 | 7 | Router and pipeline | pytest tests/test_router.py | todo |
 | 8 | Evaluation harness, test_log.csv, metrics, ablation | python -m evaluation.run_eval --split dev | todo |
 | 9 | Streamlit demo | App starts; manual walkthrough logged | todo |
