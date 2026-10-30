@@ -31,16 +31,16 @@ DESIGN_SYSTEM_CSS = """
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
     :root {
-        --bg-base: #090A0D;
-        --bg-surface: #11141A;
-        --bg-surface-elevated: #161A22;
-        --bg-surface-hover: #1D222D;
-        --border-subtle: rgba(255, 255, 255, 0.06);
-        --border-medium: rgba(255, 255, 255, 0.12);
-        --border-focus: rgba(99, 102, 241, 0.45);
-        --text-primary: #F0F3F8;
-        --text-secondary: #94A0B8;
-        --text-muted: #64748B;
+        --bg-base: #0D0F14;
+        --bg-surface: #151821;
+        --bg-surface-elevated: #1C202C;
+        --bg-surface-hover: #252B3B;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --border-medium: rgba(255, 255, 255, 0.15);
+        --border-focus: rgba(99, 102, 241, 0.55);
+        --text-primary: #F8FAFC;
+        --text-secondary: #CBD5E1;
+        --text-muted: #94A3B8;
         --accent-indigo: #6366F1;
         --accent-blue: #38BDF8;
         --status-safe: #10B981;
@@ -63,30 +63,36 @@ DESIGN_SYSTEM_CSS = """
     /* Streamlit Chrome Suppression */
     #MainMenu { visibility: hidden !important; display: none !important; }
     footer { visibility: hidden !important; display: none !important; }
-    header[data-testid="stHeader"] {
-        background: transparent !important;
-        backdrop-filter: blur(12px) !important;
-    }
     div[data-testid="stToolbar"] { visibility: hidden !important; display: none !important; }
     div[data-testid="stDecoration"] { display: none !important; }
     div[data-testid="stStatusWidget"] { visibility: hidden !important; display: none !important; }
     .stDeployButton { display: none !important; }
 
-    /* Main Container Padding & Max-Width */
+    /* Header Positioning */
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+        height: 3.25rem !important;
+        pointer-events: none !important;
+    }
+    header[data-testid="stHeader"] * {
+        pointer-events: auto !important;
+    }
+
+    /* Main Container: Generous top padding so header is 100% visible */
     .block-container {
-        padding-top: 1.5rem !important;
-        padding-bottom: 2.5rem !important;
-        max-width: 1060px !important;
+        padding-top: 4.5rem !important;
+        padding-bottom: 3rem !important;
+        max-width: 1040px !important;
     }
 
     /* Sidebar Styling */
     section[data-testid="stSidebar"] {
         background-color: var(--bg-surface) !important;
         border-right: 1px solid var(--border-subtle) !important;
-        padding-top: 0.75rem;
+        padding-top: 1rem;
     }
     section[data-testid="stSidebar"] .block-container {
-        padding-top: 0.5rem !important;
+        padding-top: 1rem !important;
         padding-left: 1rem !important;
         padding-right: 1rem !important;
         max-width: 100% !important;
@@ -100,9 +106,9 @@ DESIGN_SYSTEM_CSS = """
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 0 1.25rem 0;
-        margin-bottom: 1.25rem;
-        border-bottom: 1px solid var(--border-subtle);
+        padding: 0 0 1rem 0;
+        margin-bottom: 1.15rem;
+        border-bottom: 1px solid var(--border-medium);
     }
     .brand-cluster {
         display: flex;
@@ -110,9 +116,9 @@ DESIGN_SYSTEM_CSS = """
         gap: 12px;
     }
     .brand-mark {
-        width: 34px;
-        height: 34px;
-        background: #181D26;
+        width: 38px;
+        height: 38px;
+        background: #1C202C;
         border: 1px solid var(--border-medium);
         border-radius: var(--radius-md);
         display: flex;
@@ -121,47 +127,48 @@ DESIGN_SYSTEM_CSS = """
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
     .brand-name {
-        font-size: 19px;
-        font-weight: 600;
+        font-size: 21px;
+        font-weight: 700;
         letter-spacing: -0.02em;
-        color: var(--text-primary);
+        color: #FFFFFF;
         line-height: 1.2;
     }
     .brand-tagline {
-        font-size: 12px;
-        color: var(--text-secondary);
+        font-size: 12.5px;
+        color: var(--text-muted);
         font-weight: 400;
         margin-top: 2px;
     }
     .header-status-pill {
         display: inline-flex;
         align-items: center;
-        gap: 7px;
-        padding: 4px 10px;
-        background: rgba(16, 185, 129, 0.08);
-        border: 1px solid rgba(16, 185, 129, 0.22);
+        gap: 8px;
+        padding: 5px 12px;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.35);
         border-radius: 9999px;
         font-size: 11px;
-        font-weight: 500;
+        font-weight: 600;
         color: #34D399;
         font-family: var(--font-mono);
-        letter-spacing: 0.02em;
+        letter-spacing: 0.03em;
     }
     .status-pulse {
         width: 6px;
         height: 6px;
         background-color: #10B981;
         border-radius: 50%;
-        box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
     }
 
-    /* Disclaimer Banner (Clean Clinical Safety Standard) */
+    /* Disclaimer Banner (High-Contrast Clean Clinical Standard) */
     .safety-disclaimer-banner {
-        background: rgba(245, 158, 11, 0.04);
-        border: 1px solid rgba(245, 158, 11, 0.18);
+        background: rgba(245, 158, 11, 0.07);
+        border: 1px solid rgba(245, 158, 11, 0.28);
+        border-left: 3px solid #F59E0B;
         border-radius: var(--radius-md);
         padding: 10px 14px;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         display: flex;
         align-items: flex-start;
         gap: 10px;
@@ -171,15 +178,15 @@ DESIGN_SYSTEM_CSS = """
         font-size: 14px;
         line-height: 1.4;
         flex-shrink: 0;
-        margin-top: 2px;
+        margin-top: 1px;
     }
     .safety-disclaimer-body {
         font-size: 12px;
-        color: #CBD5E1;
+        color: #E2E8F0;
         line-height: 1.5;
     }
     .safety-disclaimer-body strong {
-        color: #FDE68A;
+        color: #FEF08A;
         font-weight: 600;
     }
 
@@ -197,7 +204,7 @@ DESIGN_SYSTEM_CSS = """
     }
     .command-card {
         background: var(--bg-surface-elevated);
-        border: 1px solid var(--border-subtle);
+        border: 1px solid var(--border-medium);
         border-radius: var(--radius-md);
         padding: 12px;
         margin-bottom: 8px;
@@ -236,26 +243,26 @@ DESIGN_SYSTEM_CSS = """
     .triage-track-step {
         height: 4px;
         border-radius: 2px;
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.1);
         transition: background 0.25s ease;
     }
 
     /* Colors by Level */
     .lvl-0-bg { background: #10B981; }
     .lvl-0-color { color: #10B981; }
-    .lvl-0-badge { background: rgba(16, 185, 129, 0.12); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.25); }
+    .lvl-0-badge { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.35); }
 
     .lvl-1-bg { background: #38BDF8; }
     .lvl-1-color { color: #38BDF8; }
-    .lvl-1-badge { background: rgba(56, 189, 248, 0.12); color: #7DD3FC; border: 1px solid rgba(56, 189, 248, 0.25); }
+    .lvl-1-badge { background: rgba(56, 189, 248, 0.15); color: #7DD3FC; border: 1px solid rgba(56, 189, 248, 0.35); }
 
     .lvl-2-bg { background: #F59E0B; }
     .lvl-2-color { color: #F59E0B; }
-    .lvl-2-badge { background: rgba(245, 158, 11, 0.12); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .lvl-2-badge { background: rgba(245, 158, 11, 0.15); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.35); }
 
     .lvl-3-bg { background: #EF4444; }
     .lvl-3-color { color: #EF4444; }
-    .lvl-3-badge { background: rgba(239, 68, 68, 0.15); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.35); }
+    .lvl-3-badge { background: rgba(239, 68, 68, 0.18); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.4); }
 
     /* Telemetry Data Grid */
     .telemetry-row {
@@ -264,10 +271,10 @@ DESIGN_SYSTEM_CSS = """
         align-items: center;
         padding: 5px 0;
         font-size: 11.5px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     .telemetry-row:last-child { border-bottom: none; }
-    .telemetry-label { color: var(--text-secondary); }
+    .telemetry-label { color: var(--text-muted); }
     .telemetry-val { font-family: var(--font-mono); font-weight: 500; color: var(--text-primary); }
 
     /* Signal Tags */
@@ -276,10 +283,10 @@ DESIGN_SYSTEM_CSS = """
         font-family: var(--font-mono);
         font-size: 10px;
         padding: 2px 6px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 4px;
-        color: #94A3B8;
+        color: #CBD5E1;
         margin: 2px 2px 2px 0;
     }
 
@@ -287,20 +294,20 @@ DESIGN_SYSTEM_CSS = """
     .welcome-container {
         text-align: center;
         max-width: 640px;
-        margin: 2rem auto 1.75rem auto;
+        margin: 1.25rem auto 1.25rem auto;
     }
     .welcome-title {
-        font-size: 26px;
-        font-weight: 600;
-        letter-spacing: -0.03em;
-        color: var(--text-primary);
-        margin-bottom: 8px;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #FFFFFF;
+        margin-bottom: 6px;
     }
     .welcome-desc {
-        font-size: 14px;
-        color: var(--text-secondary);
-        line-height: 1.55;
-        margin-bottom: 1.75rem;
+        font-size: 13.5px;
+        color: var(--text-muted);
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
     }
 
     /* Custom Scenario Card Buttons */
@@ -310,26 +317,27 @@ DESIGN_SYSTEM_CSS = """
         align-items: flex-start !important;
         justify-content: center !important;
         text-align: left !important;
-        padding: 13px 16px !important;
+        padding: 12px 16px !important;
         border-radius: var(--radius-md) !important;
-        background: var(--bg-surface-elevated) !important;
-        border: 1px solid var(--border-medium) !important;
-        color: var(--text-primary) !important;
-        min-height: 74px !important;
+        background: #1C202C !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        color: #FFFFFF !important;
+        min-height: 72px !important;
         transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
         margin-bottom: 8px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
     }
     div[data-testid="stColumn"] div.stButton > button:hover {
-        background: var(--bg-surface-hover) !important;
-        border-color: rgba(99, 102, 241, 0.45) !important;
+        background: #252B3B !important;
+        border-color: rgba(99, 102, 241, 0.6) !important;
         transform: translateY(-1px) !important;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
     }
     div[data-testid="stColumn"] div.stButton > button p {
         text-align: left !important;
         margin: 0 !important;
         width: 100% !important;
-        color: var(--text-primary) !important;
+        color: #FFFFFF !important;
         font-size: 13px !important;
         line-height: 1.4 !important;
     }
@@ -362,7 +370,7 @@ DESIGN_SYSTEM_CSS = """
         margin-bottom: 1.25rem;
     }
     .chat-bubble-user {
-        background: #181D26;
+        background: #1C202C;
         border: 1px solid var(--border-medium);
         border-radius: var(--radius-lg);
         padding: 12px 16px;
@@ -391,8 +399,8 @@ DESIGN_SYSTEM_CSS = """
 
     /* Crisis Emergency Callout Card */
     .crisis-emergency-panel {
-        background: rgba(239, 68, 68, 0.05);
-        border: 1px solid rgba(239, 68, 68, 0.35);
+        background: rgba(239, 68, 68, 0.06);
+        border: 1px solid rgba(239, 68, 68, 0.38);
         border-left: 4px solid #EF4444;
         border-radius: var(--radius-md);
         padding: 16px 18px;
@@ -418,8 +426,8 @@ DESIGN_SYSTEM_CSS = """
         margin-top: 12px;
     }
     .hotline-chip {
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.25);
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.3);
         border-radius: var(--radius-sm);
         padding: 8px 10px;
         text-decoration: none;
@@ -427,7 +435,7 @@ DESIGN_SYSTEM_CSS = """
         transition: background 0.15s ease;
     }
     .hotline-chip:hover {
-        background: rgba(239, 68, 68, 0.2);
+        background: rgba(239, 68, 68, 0.22);
     }
     .hotline-chip-name {
         font-size: 10.5px;
@@ -646,15 +654,15 @@ with st.sidebar:
                         Dev Set Audit (156 Dialogues)
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; text-align: center;">
-                        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; padding: 6px 2px;">
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px; padding: 6px 2px;">
                             <span style="display: block; font-size: 13px; font-weight: 700; color: #34D399; font-family: var(--font-mono);">{recall_pct}</span>
                             <span style="display: block; font-size: 9px; color: var(--text-muted); text-transform: uppercase;">Crisis Recall</span>
                         </div>
-                        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; padding: 6px 2px;">
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px; padding: 6px 2px;">
                             <span style="display: block; font-size: 13px; font-weight: 700; color: #34D399; font-family: var(--font-mono);">{false_alarm}</span>
                             <span style="display: block; font-size: 9px; color: var(--text-muted); text-transform: uppercase;">False Alarm</span>
                         </div>
-                        <div style="background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 6px; padding: 6px 2px;">
+                        <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 6px; padding: 6px 2px;">
                             <span style="display: block; font-size: 13px; font-weight: 700; color: #818CF8; font-family: var(--font-mono);">{acc_pct}</span>
                             <span style="display: block; font-size: 9px; color: var(--text-muted); text-transform: uppercase;">Accuracy</span>
                         </div>
@@ -688,12 +696,12 @@ with st.sidebar:
 # 5. MAIN CHAT & CONVERSATION INTERFACE
 # -----------------------------------------------------------------------------
 
-# Application Bar Header
+# Application Bar Header (High-contrast, ample clearance)
 st.markdown("""
     <div class="app-header">
         <div class="brand-cluster">
             <div class="brand-mark">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="m4.93 4.93 4.24 4.24"/>
                     <path d="m14.83 9.17 4.24-4.24"/>
@@ -751,14 +759,14 @@ if not st.session_state.msgs:
 
     sc_col1, sc_col2 = st.columns(2)
     with sc_col1:
-        if st.button("**Exam Stress & Study Planning**\n\nLevel 0 · Academic Workload & Focus", use_container_width=True):
+        if st.button("**Exam Stress & Study Planning**\n\nLevel 0 · Academic Workload & Focus", use_container_width=True, help="Click to run Level 0 routine academic stress scenario"):
             st.session_state.pending_prompt = "Mid-sems start Monday and I can't focus on operating systems."
-        if st.button("**Insomnia & Emotional Exhaustion**\n\nLevel 1 · Sub-Clinical Distress & Coping", use_container_width=True):
+        if st.button("**Insomnia & Emotional Exhaustion**\n\nLevel 1 · Sub-Clinical Distress & Coping", use_container_width=True, help="Click to run Level 1 sub-clinical distress scenario"):
             st.session_state.pending_prompt = "I haven't been sleeping well lately and I feel low most of the days."
     with sc_col2:
-        if st.button("**Academic Withdrawal & Despair**\n\nLevel 2 · Moderate Distress & Referral", use_container_width=True):
+        if st.button("**Academic Withdrawal & Despair**\n\nLevel 2 · Moderate Distress & Referral", use_container_width=True, help="Click to run Level 2 moderate withdrawal scenario"):
             st.session_state.pending_prompt = "I've felt hopeless for weeks and I've stopped going to class."
-        if st.button("**Hyperbole Trap Disambiguation**\n\nLevel 0 · Idiomatic Expression Filter", use_container_width=True):
+        if st.button("**Hyperbole Trap Disambiguation**\n\nLevel 0 · Idiomatic Expression Filter", use_container_width=True, help="Click to test false-alarm disambiguation ('killing me lol')"):
             st.session_state.pending_prompt = "This DBMS assignment is killing me lol, dying to go home!"
 
 # Render Conversation Message Thread
@@ -790,7 +798,7 @@ for m in st.session_state.msgs:
         if level == 3:
             crisis_markup = f"""
                 <div class="chat-bubble-container">
-                    <div class="chat-bubble-ai" style="border-color: rgba(239, 68, 68, 0.4); width: 100%; background: #160F11;">
+                    <div class="chat-bubble-ai" style="border-color: rgba(239, 68, 68, 0.4); width: 100%; background: #1C1215;">
                         <div class="message-meta">
                             <span style="color: #F87171; font-weight: 600;">MannSahara Safety Triage</span>
                             <span>•</span>
