@@ -46,7 +46,7 @@ Source spec: MannSahara_Implementation_Guide.pdf (primary). Date created: 2026-1
 | Phase | Goal | Verification command | Status |
 |-------|------|----------------------|--------|
 | 0 | Setup | pytest -q | done |
-| 1 | Config, fixed templates, simulated tools | pytest tests/test_resources.py | todo |
+| 1 | Config, fixed templates, simulated tools | pytest tests/test_resources.py | done |
 | 2 | Synthetic dataset (dev + held-out) | pytest tests/test_dataset.py | todo |
 | 3 | Rules layer (English + Hinglish) | pytest tests/test_rules.py | todo |
 | 4 | LLM client and classifier | pytest tests/test_classifier.py | todo |

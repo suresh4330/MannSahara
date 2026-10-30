@@ -1,0 +1,37 @@
+{
+  "_note": "Set verified=true only after checking each number on its official page.",
+  "resources": [
+    {
+      "id": "telemanas",
+      "name": "Tele-MANAS",
+      "number": "14416",
+      "kind": "national_helpline",
+      "verified": false,
+      "source_url": ""
+    },
+    {
+      "id": "kiran",
+      "name": "KIRAN Mental Health Helpline",
+      "number": "1800-599-0019",
+      "kind": "national_helpline",
+      "verified": false,
+      "source_url": ""
+    },
+    {
+      "id": "emergency",
+      "name": "National emergency number",
+      "number": "112",
+      "kind": "emergency",
+      "verified": false,
+      "source_url": ""
+    },
+    {
+      "id": "campus",
+      "name": "Campus Counseling Cell",
+      "number": "REPLACE_ME",
+      "kind": "campus",
+      "verified": false,
+      "source_url": ""
+    }
+  ]
+}
