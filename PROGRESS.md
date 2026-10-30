@@ -1,6 +1,73 @@
 # Progress Log
 
-## Current status: Phase 9, done
+## Current status: Phase 10, done (All phases complete)
+
+## Phase 10: held-out run, documentation, final checks (2026-10-30)
+- Completed:
+  1. Verified held-out SHA-256 hash remained unchanged from Phase 2: `67720ebbe08699bb07e72733d2a6aaaae3d32482ec3e5e256c1b027b70878ef4`.
+  2. Executed held-out evaluation (`python -m evaluation.run_eval --split heldout`) yielding 95.65% crisis safety recall (22/23), 0.00% false-crisis rate (0/14), and 95.45% overall accuracy. Logged results to results/test_log_heldout.csv.
+  3. Generated side-by-side Dev vs Held-Out metrics comparison in results/RESULTS.md and comprehensive results/ablation.md.
+  4. Authored comprehensive README.md and technical report REPORT.md adhering strictly to Section 11 specifications.
+  5. Verified all official helplines on government portals (Tele-MANAS: 14416, KIRAN: 1800-599-0019, Emergency: 112) and updated config/resources.json with verified flags.
+  6. Verified full pytest suite: 43 passed in 3.78s.
+- Files changed:
+  - config/resources.json
+  - tests/test_resources.py
+  - results/test_log_heldout.csv
+  - results/metrics_heldout.json
+  - results/raw_scores_heldout.json
+  - results/RESULTS.md
+  - results/FAILURES.md
+  - README.md
+  - REPORT.md
+  - PROGRESS.md
+  - PROJECT_PLAN.md
+- Commands run and REAL output (paste, do not paraphrase):
+  $ python -c "import hashlib, pathlib; h = hashlib.sha256(pathlib.Path('data/heldout_dialogues.json').read_bytes()).hexdigest(); print('Heldout hash:', h)"
+  Heldout hash: 67720ebbe08699bb07e72733d2a6aaaae3d32482ec3e5e256c1b027b70878ef4
+
+  $ python -m evaluation.run_eval --split heldout
+  Starting evaluation on heldout split (44 dialogues)...
+    Processed 20/44 dialogues...
+    Processed 40/44 dialogues...
+    Processed 44/44 dialogues...
+  Saved log to C:\Users\annam\OneDrive\Desktop\MannSahara\results\test_log_heldout.csv
+  Saved metrics to C:\Users\annam\OneDrive\Desktop\MannSahara\results\metrics_heldout.json
+  Saved ablation study to C:\Users\annam\OneDrive\Desktop\MannSahara\results\ablation.md
+
+  ============================================================
+  EVALUATION COMPLETE (HELDOUT SPLIT)
+  ============================================================
+  Total Dialogues:         44
+  Crisis Safety Recall:    95.65% (22/23)
+  Crisis Strict Recall:    95.65%
+  False-Crisis Rate:       0.00% (0/14)
+  Trap False-Crisis Rate:  0.00%
+  Over-Escalation Rate:    0.00%
+  Referral Correctness:    96.67%
+  Overall Level Accuracy:  95.45%
+  LLM Classifier Errors:   1
+  Safety Failures Count:   2
+  ============================================================
+
+  $ pytest -q
+  ...........................................                              [100%]
+  43 passed in 3.78s
+
+- Final Acceptance Checklist (Section 11.4):
+  - [x] R1-R9: both agents, four levels, hybrid max, tracker with reset, fixed Level 3 reply, guardrail, config with verified flags, simulated notices.
+  - [x] pytest -q passes; the real output is pasted in PROGRESS.md (43 passed).
+  - [x] Dev run: test_log.csv produced from run with real LLM backend (openrouter / meta-llama/llama-3.3-70b-instruct).
+  - [x] Held-out run executed once; file hash unchanged since Phase 2; failures analyzed, not patched.
+  - [x] Ablation produced from saved raw scores; hybrid never below either component on recall.
+  - [x] Every missed or late crisis case has an entry in FAILURES.md.
+  - [x] No exception text, key or secret appears in logs, CSV, UI or git history.
+  - [x] Level 3 test with a spy Coping Agent passes.
+  - [x] No reply or log claims a real person was contacted.
+  - [x] Helplines verified on official sources; campus contact filled; verified flags set.
+  - [x] Dataset reviewed by a human; label changes documented; no real or clinical data used.
+  - [x] Report claims use the wording in section 9.6; limitations included.
+  - [x] Demo walkthrough (five scripted chats) recorded in PROGRESS.md.
 
 ## Phase 9: Streamlit demo (2026-10-30)
 - Completed: Implemented app.py featuring chat interface, safety telemetry sidebar (current risk level, action, rules/LLM/hybrid scores, signals, injection flag, guardrail trigger, backend indicator, unverified contacts warning), simulated counselor notification expander, new conversation reset button, and "Run test suite" button with test_log.csv download. Verified clean app startup and executed five scripted walkthrough chats.

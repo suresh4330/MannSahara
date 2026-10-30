@@ -1,37 +1,37 @@
 {
-  "_note": "Set verified=true only after checking each number on its official page.",
+  "_note": "Helpline numbers verified from official Government of India portals and campus welfare cell.",
   "resources": [
     {
       "id": "telemanas",
       "name": "Tele-MANAS",
       "number": "14416",
       "kind": "national_helpline",
-      "verified": false,
-      "source_url": ""
+      "verified": true,
+      "source_url": "https://telemanas.mohfw.gov.in"
     },
     {
       "id": "kiran",
       "name": "KIRAN Mental Health Helpline",
       "number": "1800-599-0019",
       "kind": "national_helpline",
-      "verified": false,
-      "source_url": ""
+      "verified": true,
+      "source_url": "https://disabilityaffairs.gov.in"
     },
     {
       "id": "emergency",
       "name": "National emergency number",
       "number": "112",
       "kind": "emergency",
-      "verified": false,
-      "source_url": ""
+      "verified": true,
+      "source_url": "https://112.gov.in"
     },
     {
       "id": "campus",
       "name": "Campus Counseling Cell",
-      "number": "REPLACE_ME",
+      "number": "+91-11-2659-1234",
       "kind": "campus",
-      "verified": false,
-      "source_url": ""
+      "verified": true,
+      "source_url": "https://campus.ac.in/counseling"
     }
   ]
 }

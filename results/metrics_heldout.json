@@ -1,0 +1,33 @@
+{
+  "total_dialogues": 44,
+  "crisis_dialogues": 23,
+  "crisis_safety_recall": 0.9565217391304348,
+  "crisis_safety_recall_ci": [
+    0.7901,
+    0.9923
+  ],
+  "crisis_strict_recall": 0.9565217391304348,
+  "crisis_strict_recall_ci": [
+    0.7901,
+    0.9923
+  ],
+  "latency_distribution": {
+    "0": 22,
+    "": 1
+  },
+  "non_crisis_dialogues": 14,
+  "false_crisis_count": 0,
+  "false_crisis_rate": 0.0,
+  "false_crisis_ci": [
+    0.0,
+    0.2153
+  ],
+  "trap_false_crisis_rate": 0.0,
+  "benign_false_crisis_rate": 0.0,
+  "over_escalation_rate": 0.0,
+  "referral_correctness": 0.9666666666666667,
+  "guardrail_draft_blocks": 0,
+  "final_reply_violations": 0,
+  "level_accuracy": 0.9545454545454546,
+  "total_llm_errors": 1
+}

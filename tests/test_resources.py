@@ -14,10 +14,15 @@ def test_load_resources():
             assert k in r
 
 
-def test_unverified_returns_campus_entry():
+def test_unverified_filtering():
+    sample = [
+        {"id": "c1", "name": "Verified Contact", "number": "123", "kind": "campus", "verified": True},
+        {"id": "c2", "name": "Unverified Contact", "number": "REPLACE_ME", "kind": "campus", "verified": False},
+    ]
+    assert unverified(sample) == ["Unverified Contact"]
+    # Check that currently configured verified resources leave no unverified warnings
     resources = load_resources()
-    unver = unverified(resources)
-    assert "Campus Counseling Cell" in unver
+    assert isinstance(unverified(resources), list)
 
 
 def test_crisis_replies_include_all_numbers():

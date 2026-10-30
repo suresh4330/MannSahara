@@ -2,26 +2,26 @@
 Source spec: MannSahara_Implementation_Guide.pdf (primary). Date created: 2026-10-30
 
 ## Requirements (R1-R20 from the guide)
-- R1: Two cooperating agents: Safety Gateway and Coping Agent - todo
-- R2: Four risk levels 0 to 3 as defined in section 6 - todo
-- R3: Hybrid scoring: rules layer plus LLM classifier, take the higher score - todo
-- R4: Multi-turn risk tracker with crisis latch, reset per conversation - todo
-- R5: Level 3 reply is pre-written; the Coping Agent LLM is never called at Level 3 - todo
-- R6: Coping Agent never diagnoses, gives medication advice, shares methods, or claims to replace a therapist - todo
-- R7: Output guardrail checks every generated reply and falls back to a safe template - todo
-- R8: Helplines and campus contacts live in config with a verified flag - todo
-- R9: Counselor notification is simulated and labeled as simulated everywhere - todo
-- R10: Synthetic dataset: dev set >= 150 dialogues, held-out set >= 40 dialogues, covering 10 categories - todo
-- R11: test_log.csv with the columns in section 9.1 - todo
-- R12: Metrics: crisis recall, false-crisis rate, escalation latency, referral correctness, guardrail violations - todo
-- R13: Ablation: rules-only vs LLM-only vs hybrid on the same data - todo
-- R14: Streamlit demo with chat, live safety panel, disclaimer, Run test suite button, CSV download - todo
-- R15: No secrets in code or git - doing
-- R16: No real clinical or student data - todo
-- R17: Automated tests with pytest - doing
-- R18: README and report with honest claims and limitations - todo
-- R19: PROJECT_PLAN.md and PROGRESS.md maintained - doing
-- R20: No fabricated results - doing
+- R1: Two cooperating agents: Safety Gateway and Coping Agent - done
+- R2: Four risk levels 0 to 3 as defined in section 6 - done
+- R3: Hybrid scoring: rules layer plus LLM classifier, take the higher score - done
+- R4: Multi-turn risk tracker with crisis latch, reset per conversation - done
+- R5: Level 3 reply is pre-written; the Coping Agent LLM is never called at Level 3 - done
+- R6: Coping Agent never diagnoses, gives medication advice, shares methods, or claims to replace a therapist - done
+- R7: Output guardrail checks every generated reply and falls back to a safe template - done
+- R8: Helplines and campus contacts live in config with a verified flag - done
+- R9: Counselor notification is simulated and labeled as simulated everywhere - done
+- R10: Synthetic dataset: dev set >= 150 dialogues, held-out set >= 40 dialogues, covering 10 categories - done
+- R11: test_log.csv with the columns in section 9.1 - done
+- R12: Metrics: crisis recall, false-crisis rate, escalation latency, referral correctness, guardrail violations - done
+- R13: Ablation: rules-only vs LLM-only vs hybrid on the same data - done
+- R14: Streamlit demo with chat, live safety panel, disclaimer, Run test suite button, CSV download - done
+- R15: No secrets in code or git - done
+- R16: No real clinical or student data - done
+- R17: Automated tests with pytest - done
+- R18: README and report with honest claims and limitations - done
+- R19: PROJECT_PLAN.md and PROGRESS.md maintained - done
+- R20: No fabricated results - done
 
 ## Decisions in force (D1-D10)
 - D1: Passive suicidal ideation -> Level 3 (crisis path).
@@ -39,8 +39,8 @@ Source spec: MannSahara_Implementation_Guide.pdf (primary). Date created: 2026-1
 - OS: Windows
 - Python: 3.14.2
 - Packages: streamlit 1.61.1, pydantic 2.13.4, pandas 2.3.x, pytest 9.0.3, requests 2.34.2, python-dotenv 1.2.2
-- Git state: Initializing repo for MannSahara
-- LLM backend: Mock for unit tests / dev; hosted API or local provider to be configured for final run
+- Git state: Repository active with phase-by-phase commits
+- LLM backend: OpenRouter (`meta-llama/llama-3.3-70b-instruct`)
 
 ## Phases
 | Phase | Goal | Verification command | Status |
@@ -55,7 +55,7 @@ Source spec: MannSahara_Implementation_Guide.pdf (primary). Date created: 2026-1
 | 7 | Router and pipeline | pytest tests/test_router.py | done |
 | 8 | Evaluation harness, test_log.csv, metrics, ablation | python -m evaluation.run_eval --split dev | done |
 | 9 | Streamlit demo | App starts; manual walkthrough logged | done |
-| 10 | Held-out run, README, report, final checklist | Section 11 checklist fully ticked | todo |
+| 10 | Held-out run, README, report, final checklist | Section 11 checklist fully ticked | done |
 
 ## Risks and open questions
 - Ollama is not installed locally in PATH. For real LLM runs in Phase 4+, an API key (e.g. Gemini / Anthropic / OpenAI) or Ollama setup will be confirmed with the user.
