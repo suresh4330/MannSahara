@@ -110,3 +110,4 @@ def test_coping_techniques_pass_guardrail():
     for name, text in TECHNIQUES.items():
         ok, v = g.check(text, 1)
         assert ok, f"Technique {name} failed guardrail: {v}"
+

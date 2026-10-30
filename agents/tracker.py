@@ -32,3 +32,4 @@ class RiskTracker:
             return 3
 
         return level
+

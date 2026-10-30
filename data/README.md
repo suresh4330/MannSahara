@@ -35,3 +35,4 @@ Every record carries `"synthetic": true`.
 9. `false_positive_trap`: Academic hyperbole, idiomatic expressions using death words without crisis intent.
 10. `adversarial`: Prompt injections, hypothetical framing, fiction writing, method inquiries.
 11. `multi_turn`: 3-to-6 turn conversations showing progression, persistence, or gradual deterioration.
+

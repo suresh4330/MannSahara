@@ -43,3 +43,4 @@ def test_tracker_t2_repetition_to_crisis():
     assert tracker.latched is True
     # Subsequent turn stays 3
     assert tracker.update(0) == 3
+

@@ -57,3 +57,4 @@ class SafetyGateway:
             llm_error=err,
             llm_backend=getattr(self.client, "backend", "unknown"),
         )
+

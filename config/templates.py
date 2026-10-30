@@ -44,3 +44,4 @@ FALLBACK = {
 def crisis_reply(third_person, resources):
     t = CRISIS_THIRD if third_person else CRISIS_SELF
     return t.format(contacts=contacts_block(resources))
+

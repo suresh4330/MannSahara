@@ -24,3 +24,4 @@ class CopingAgent:
             f"</student_message>\nRisk level: {level}"
         )
         return self.client.complete(SYSTEM, user, 220).strip()
+

@@ -12,3 +12,4 @@ def notify_counselor_sim(level, signals, turn_index):
         "created_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "note": "Handoff summary holds signals only, never the full transcript.",
     }
+

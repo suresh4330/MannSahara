@@ -60,3 +60,4 @@ def test_third_person_detection():
     lvl, sig, _ = score_rules("My roommate said he wants to die.")
     assert lvl == 3
     assert "third_person" in sig
+

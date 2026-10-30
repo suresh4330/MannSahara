@@ -54,3 +54,4 @@ def test_gateway_llm_failure_fallback():
     assert "Simulated" not in res.llm_error
     assert res.hybrid_score == 3
     assert res.tracked_level == 3
+

@@ -19,3 +19,4 @@ def unverified(resources):
 
 def contacts_block(resources):
     return "\n".join(f"- {r['name']}: {r['number']}" for r in resources)
+
