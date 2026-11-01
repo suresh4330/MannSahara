@@ -8,7 +8,17 @@ import pathlib
 import json
 import html
 from datetime import datetime
+import os
 import streamlit as st
+
+# Propagate Streamlit Cloud secrets to os.environ if present
+try:
+    if hasattr(st, "secrets"):
+        for k, v in st.secrets.items():
+            if isinstance(v, (str, int, float, bool)) and k not in os.environ:
+                os.environ[k] = str(v)
+except Exception:
+    pass
 
 from router import build_pipeline
 from tools.resource_lookup import unverified

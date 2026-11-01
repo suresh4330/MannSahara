@@ -5,6 +5,20 @@ import os
 import requests
 
 
+def _get_setting(key: str, default: str = "") -> str:
+    """Read a setting from os.environ, falling back to st.secrets for Streamlit Cloud."""
+    val = os.getenv(key)
+    if val:
+        return val
+    try:
+        import streamlit as st
+        if hasattr(st, "secrets") and key in st.secrets:
+            return str(st.secrets[key])
+    except Exception:
+        pass
+    return default
+
+
 class LLMClient:
     backend = "base"
 
@@ -17,13 +31,13 @@ class OpenRouterClient(LLMClient):
 
     def __init__(self):
         self.api_key = (
-            os.getenv("OPENROUTER_API_KEY")
-            or os.getenv("ANTHROPIC_AUTH_TOKEN")
-            or os.getenv("OPENAI_API_KEY")
+            _get_setting("OPENROUTER_API_KEY")
+            or _get_setting("ANTHROPIC_AUTH_TOKEN")
+            or _get_setting("OPENAI_API_KEY")
         )
         if not self.api_key:
             raise ValueError("No API token found for OpenRouter (set OPENROUTER_API_KEY or ANTHROPIC_AUTH_TOKEN)")
-        self.model = os.getenv("LLM_MODEL", "meta-llama/llama-3.1-8b-instruct")
+        self.model = _get_setting("LLM_MODEL", "meta-llama/llama-3.3-70b-instruct")
         self.endpoint = "https://openrouter.ai/api/v1/chat/completions"
 
     def complete(self, system: str, user: str, max_tokens: int = 300) -> str:
@@ -149,7 +163,7 @@ class MockClient(LLMClient):
 def get_client() -> LLMClient:
     from dotenv import load_dotenv
     load_dotenv()
-    p = os.getenv("LLM_PROVIDER", "mock").lower()
+    p = _get_setting("LLM_PROVIDER", "mock").lower()
     if p == "openrouter":
         return OpenRouterClient()
     if p == "ollama":
