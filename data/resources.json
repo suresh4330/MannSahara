@@ -1,0 +1,21 @@
+{
+  "verified_on": "Tele-MANAS and 112 checked against public sources on 7 Nov 2026. RE-VERIFY before your demo and update this date. Add your own college counselling contact.",
+  "emergency": {
+    "name": "National Emergency Number (India)",
+    "number": "112"
+  },
+  "helplines": [
+    {
+      "name": "Tele-MANAS (Government of India, free, 24x7 mental health helpline)",
+      "number": "14416 or 1-800-891-4416",
+      "website": "https://telemanas.mohfw.gov.in"
+    }
+  ],
+  "campus": [
+    {
+      "name": "Your college counselling cell",
+      "contact": "ADD YOUR VERIFIED COLLEGE COUNSELLOR CONTACT HERE"
+    }
+  ]
+}
+
