@@ -64,6 +64,9 @@ def _openai_compatible(system, messages, json_mode, temperature, model, provider
     kwargs = {}
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
+        kwargs["max_tokens"] = 250
+    else:
+        kwargs["max_tokens"] = 600
     resp = client.chat.completions.create(
         model=model,
         messages=[{"role": "system", "content": system}] + messages,
