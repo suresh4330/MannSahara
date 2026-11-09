@@ -1,7 +1,7 @@
 """Graph nodes. Each node reads the state and returns only the keys it changes."""
-from . import config, llm, risk_llm
+from . import alerts, config, llm, risk_llm
 from .conversation_risk import combine
-from .risk_rules import screen
+from .risk_rules import needs_llm_review, screen
 from .state import ChatState
 from .templates import checkin_reply, crisis_reply, fallback_reply
 from .validator import validate
@@ -10,9 +10,9 @@ SUPPORT_SYSTEM = """You are MannSahara, a supportive wellbeing companion for col
 Rules you must always follow:
 - You are an AI, not a counsellor, doctor or therapist. Never diagnose. Never say the student \
 "has" a condition. Never give medication, dosage or treatment advice.
-- Be warm and brief (3-6 sentences). Acknowledge the student's feeling, then offer one or two \
-practical, non-clinical suggestions (study plan, short breaks, sleep routine, talking to a \
-friend, visiting the college counselling cell).
+- Answer the student's actual question first. Be warm and concise (1-3 short sentences), then offer one or two \
+practical, non-clinical suggestions (study plan, short breaks, sleep routine, talking to a friend, \
+or visiting the college counselling cell).
 - Never describe methods of self-harm or suicide. Never agree that things are hopeless.
 - Never claim to have contacted anyone, and never promise secrecy.
 - If the student writes in Hinglish, reply in simple English or in the same style.
@@ -49,7 +49,10 @@ def make_nodes(store=None, use_llm_classifier=True):
         msg = state["user_message"]
         rules = screen(msg)
         llm_level, llm_reason, llm_third, failed = 0, "", False, False
-        if use_llm_classifier:
+        # Rules already determine explicit crisis and ambiguous disclosures.
+        # Skipping the redundant local-model pass here preserves that result and
+        # makes the most important template routes immediate.
+        if use_llm_classifier and rules.level < 2 and needs_llm_review(msg):
             llm_level, llm_reason, llm_third, failed = risk_llm.classify(
                 msg, state.get("history", [])
             )
@@ -72,7 +75,7 @@ def make_nodes(store=None, use_llm_classifier=True):
 
     def _llm_reply(state, system):
         system = system + state.get("retry_note", "")
-        msgs = list(state.get("history", []))
+        msgs = list(state.get("history", []))[-config.MAX_HISTORY_TURNS:]
         msgs = msgs + [{"role": "user", "content": state["user_message"]}]
         try:
             return llm.generate(system, msgs)
@@ -107,6 +110,15 @@ def make_nodes(store=None, use_llm_classifier=True):
         }
         if store is not None:
             store.log_escalation(
+                state.get("conversation_id"),
+                state.get("turn"),
+                state.get("final_level"),
+                state.get("risk_reasons", []),
+            )
+            # Optional notification is intentionally asynchronous so the student
+            # gets the crisis response immediately even if Gmail is unavailable.
+            alerts.notify_async(
+                store,
                 state.get("conversation_id"),
                 state.get("turn"),
                 state.get("final_level"),

@@ -2,6 +2,8 @@
 import re
 
 BANNED = [
+    ("foreign_helplines",
+     r"\b(988|741741|national suicide prevention lifeline|suicide & crisis lifeline|in the united states|u\.s\., canada|puerto rico)\b"),
     ("diagnosis",
      r"\byou (have|are suffering from|likely have|probably have|may have)\s+"
      r"(depression|an anxiety disorder|anxiety disorder|bipolar|ptsd|adhd|ocd|a disorder)\b"),
@@ -42,6 +44,8 @@ def validate(reply: str):
         return False, ["empty_reply"]
     if len(text) > MAX_LEN:
         violations.append("too_long")
+    if text.endswith(("(", "[", "{", ":", "—")):
+        violations.append("truncated_reply")
     low = text.lower().replace("\u2019", "'")
     for name, pattern in BANNED:
         if re.search(pattern, low):

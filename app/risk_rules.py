@@ -7,6 +7,33 @@ from dataclasses import dataclass, field
 
 NORMAL, DISTRESS, AMBIGUOUS, CRISIS = 0, 1, 2, 3
 
+# Comprehensive regex pattern covering suicide and common student typos / misspellings
+SUICIDE_REGEX = (
+    r"(?:suicide|sucide|suiside|suicde|suisid|suicid\w*|suicidal|sucidal|suisidal|suicdal)"
+)
+
+# Comprehensive regex pattern covering poison, ingestion of toxic substances, pesticides, and typos
+POISON_REGEX = (
+    r"(?:poison\w*|poision\w*|poisen\w*|posion\w*|pesticide\w*|insecticide\w*|rat\s*poison|"
+    r"harpic|bleach|cyanide|arsenic|acid|zeher|zahar|zehar)"
+)
+
+# Comprehensive regex pattern covering murder, homicide, killing others, and typos
+MURDER_REGEX = (
+    r"(?:murder\w*|muder\w*|murdr\w*|homicide\w*|manslaughter|khoon)"
+)
+
+# Locations and structures for jumping or pushing
+BUILDING_REGEX = (
+    r"(?:building|buliding|biulding|roof|terrace|balcony|window|bridge|train|metro|tower|floor)"
+)
+
+# Lethal methods (hanging, jumping, drowning, overdose, suffocation, slitting)
+LETHAL_METHOD_REGEX = (
+    r"(?:hang(ing)?\s+myself|jump(ing)?\s+(off|from|in\s+front)|slit(ting)?\s+(my\s+)?(wrist|wrists|throat)|"
+    r"overdose|overdosing|drown(ing)?\s+myself|suffocat(e|ing)\s+myself|shoot(ing)?\s+myself|stab(bing)?\s+myself)"
+)
+
 
 def normalize(text: str) -> str:
     t = text.lower()
@@ -40,16 +67,22 @@ IDIOMS = [
 # but is downgraded to ambiguous (level 2)
 CRISIS_PATTERNS = [
     ("suicide_intent",
-     r"\b(i|i'm|im|i am)\s+(want|wanna|going|plan|planning|thinking|decided|ready)\s+"
-     r"[^.?!]{0,20}\b(to die|kill myself|end it( all)?|take my own life)\b",
+     rf"\b(i|i'm|im|i am)\s+(?:feel\s+)?(want|wanna|going|plan|planning|thinking|decided|ready|feel|feeling)\s+"
+     rf"[^.?!]{{0,25}}\b(to die|kill myself|kill myslf|end it( all)?|end my life|take my own life|commit\s+{SUICIDE_REGEX}|{SUICIDE_REGEX})\b",
+     False),
+    ("feel_suicide",
+     rf"\b(i|i'm|im|i am)?\s*(feel|feeling)\s+(i\s+)?(want|wanna)?\s*[^.?!]{{0,15}}\b(to die|{SUICIDE_REGEX})\b",
+     False),
+    ("want_suicide",
+     rf"\b(want|wanna|wish|think|thinking|feeling like|feel like|plan|planning)\s+(to\s+)?(commit\s+)?{SUICIDE_REGEX}\b",
      False),
     ("want_to_die", r"\b(want to|wanna)\s+(die|be dead)\b", True),
-    ("kill_myself", r"\bkill(ing)?\s+myself\b", False),
+    ("kill_myself", r"\b(kill(ing)?\s+(myself|myslf)|kms)\b", False),
     ("end_life", r"\b(end|ending|take|taking)\s+(my|my own)\s+life\b", False),
     ("end_it_all", r"\bend(ing)?\s+it\s+all\b", False),
     ("thinking_of_ending",
-     r"\b(thinking|thought|thoughts)\s+(of|about)\s+(ending|killing|hurting)\s+"
-     r"(it all|my life|myself)\b",
+     rf"\b(thinking|thought|thoughts)\s+(of|about)\s+(ending|killing|hurting)\s+"
+     rf"(it all|my life|myself|{SUICIDE_REGEX})\b",
      True),
     ("wish_dead", r"\bwish i (was|were) dead\b", True),
     ("want_dead", r"\bwant to be dead\b", True),
@@ -64,10 +97,13 @@ CRISIS_PATTERNS = [
      r"\b(hurt(ing)?|cut(ting)?|harm(ing)?|injur(ing|ed)?)\s+(myself|my\s+(wrists?|arms?|body))\b",
      False),
     ("suicidal_self",
-     r"\b(i|i'm|im|i am|feel|feeling)\s+(suicidal|suicidal thoughts?)\b",
+     rf"\b(i|i'm|im|i am|feel|feeling)\s+({SUICIDE_REGEX}|suicidal thoughts?)\b",
+     False),
+    ("commit_suicide",
+     rf"\b(commit|committing|commiting|attempt|attempting)\s+{SUICIDE_REGEX}\b",
      False),
     ("goodbye_note",
-     r"\b(wrote|written|writing)\s+(a |my )?(suicide|goodbye|last)\s+(note|letter|message)\b",
+     rf"\b(wrote|written|writing)\s+(a |my )?({SUICIDE_REGEX}|goodbye|last)\s+(note|letter|message)\b",
      False),
     ("giving_away", r"\bgiving away my (stuff|things|belongings)\b", False),
     ("last_message", r"\b(this is|it's)\s+(my\s+)?(last|final)\s+(message|goodbye)\b", False),
@@ -76,11 +112,11 @@ CRISIS_PATTERNS = [
      r"|\b(die|kill|lethal|overdose|dangerous|fatal)\s+(dose|amount|quantity)\b",
      False),
     ("method_request",
-     r"\b(ways?|methods?)\s+(to\s+)?(die|kill myself|end my life|commit suicide)\b",
+     rf"\b(ways?|methods?)\s+(to\s+)?(die|kill myself|kill myslf|end my life|commit\s+{SUICIDE_REGEX})\b",
      False),
     ("painless_death", r"\bpainless(ly\s+)?(way|death|die|to die)\b", False),
     ("how_to_die",
-     r"\bhow (to|do i|can i) (kill myself|commit suicide|end my life|die)\b",
+     rf"\bhow (to|do i|can i) (kill myself|kill myslf|commit\s+{SUICIDE_REGEX}|end my life|die)\b",
      False),
     # Hinglish
     ("hi_mar_jaana",
@@ -91,11 +127,61 @@ CRISIS_PATTERNS = [
     ("hi_jeena_nahi", r"\bjeena (nahi|nahin)\s+(chahta|chahti)\b", False),
     ("hi_khud_ko", r"\bkhud ko (khatam|maar)\b", False),
     ("hi_zindagi_khatam", r"\bzindagi (khatam|end)\b", False),
-    ("hi_suicide_karna", r"\bsuicide kar(na|ne|unga|ungi)\b", False),
+    ("hi_suicide_karna", rf"\b{SUICIDE_REGEX}\s+kar(na|ne|unga|ungi|u)\b", False),
     ("hi_jaan_de", r"\bjaan (de|dena)\s+(dun|du|dunga|dungi)\b", False),
     ("hi_main_na_rahun", r"\bmain na (rahu|rahun|rahoon|raha|rahi)\b", False),
     ("hi_jeene_mann_nahi", r"\bjeene ka mann nahi\b", False),
-    ("hi_mujhe_suicide", r"\bmujhe suicide\b", False),
+    ("hi_mujhe_suicide", rf"\bmujhe\s+{SUICIDE_REGEX}\b", False),
+
+    # Poison & toxic substance ingestion (including typos like poision, posion, etc.)
+    ("poison_intent",
+     rf"\b(drink|drinking|mix|mixing|take|taking|eat|eating|consume|consuming|ingest|ingesting|buy|buying|put|putting|use|using)\s+"
+     rf"[^.?!]{{0,25}}\b{POISON_REGEX}\b"
+     rf"|\b{POISON_REGEX}\s+[^.?!]{{0,25}}\b(in\s+my\s+(drink|water|food|tea|coffee|juice)|to\s+die|to\s+kill|myself)\b",
+     False),
+    ("poison_method",
+     rf"\b(which|what|best)\s+[^.?!]{{0,25}}\b{POISON_REGEX}\b"
+     rf"|\b{POISON_REGEX}\s+(is\s+)?(best|effective|fast|painless|lethal)\b",
+     False),
+    ("poison_self",
+     rf"\b(poison|poision|posion)\s+(myself|my\s+own)\b",
+     False),
+    ("hi_zeher_khana",
+     r"\b(zeher|zahar)\s+(khana|peena|khaa|pee|lena|le\s+lu|le\s+lunga|khatam)\b",
+     False),
+
+    # Murder, homicide & violent harm to others (including typos like muder)
+    ("murder_intent",
+     rf"\b(i|i'm|im|i am|want|wanna|going\s+to|gonna|plan|planning|will|need\s+to|have\s+(a\s+)?plan)\s+[^.?!]{{0,25}}\b"
+     rf"({MURDER_REGEX}|kill|stab|shoot|poison|harm|strangle|push|throw)\s+[^.?!]{{0,20}}\b"
+     rf"(someone|somebody|people|a\s+person|him|her|them|my\s+\w+|roommate|friend|everyone)\b",
+     False),
+    ("push_throw_harm",
+     rf"\b(push|pushing|throw|throwing|drop|dropping)\s+[^.?!]{{0,25}}\b"
+     rf"(my\s+)?(friend|roommate|someone|somebody|brother|sister|person|people|him|her|them)\s+"
+     rf"[^.?!]{{0,20}}\b(from|off|down|in\s+front)\b"
+     rf"|\b(push|pushing|throw|throwing|drop|dropping)\s+[^.?!]{{0,25}}\b"
+     rf"(from|off)\s+[^.?!]{{0,15}}\b{BUILDING_REGEX}\b",
+     False),
+    ("murder_action",
+     rf"\b(commit|committing)\s+(a\s+)?{MURDER_REGEX}\b"
+     rf"|\b{MURDER_REGEX}\s+(someone|somebody|people|him|her|them)\b",
+     False),
+    ("hi_khoon_karna",
+     r"\b(khoon\s+kar|jaan\s+se\s+maar|maar\s+dunga|maar\s+dalunga|kisi\s+ko\s+maar)\b",
+     False),
+
+    # Lethal physical actions (hanging, jumping, slitting, overdose)
+    ("lethal_action",
+     rf"\b(i|i'm|im|i am|want|wanna|going\s+to|gonna|plan|planning|will|thinking\s+of)?\s*[^.?!]{{0,20}}\b{LETHAL_METHOD_REGEX}\b",
+     False),
+    ("jump_intent",
+     rf"\b(jump|jumping)\s+(off|from)\s+(the\s+|a\s+)?{BUILDING_REGEX}\b"
+     r"|\bjump\s+in\s+front\s+of\s+(a\s+|the\s+)?(train|metro|truck|bus|car)\b",
+     False),
+    ("hanging_intent",
+     r"\b(hang|hanging)\s+(myself|from\s+the\s+fan|from\s+ceiling)\b",
+     False),
 ]
 
 AMBIGUOUS_PATTERNS = [
@@ -112,7 +198,9 @@ AMBIGUOUS_PATTERNS = [
     ("nobody_notice", r"\bnobody (would|will) (notice|care|miss)\b"),
     ("tired_of_life", r"\btired of (everything|life|living|it all)\b"),
     ("not_want_here", r"\bdon'?t want to be here\b"),
-    ("suicide_topic", r"\bsuicide\b"),
+    ("suicide_topic", rf"\b{SUICIDE_REGEX}\b"),
+    ("poison_topic", rf"\b{POISON_REGEX}\b"),
+    ("murder_topic", rf"\b{MURDER_REGEX}\b"),
     ("self_harm_topic", r"\bself[- ]?harm\b"),
     ("better_if_gone",
      r"\b(better|easier)\s+(if\s+)?(i\s+)?(wasn't|weren't|was gone|were gone)\b"),
@@ -128,7 +216,7 @@ AMBIGUOUS_PATTERNS = [
 THIRD_PERSON_PATTERN = (
     r"\b((my\s+)?(friend|roommate|room\s*mate|brother|sister|cousin|classmate|batchmate)"
     r"|someone\s+i\s+know)"
-    r"[^.?!]{0,35}\b(suicid\w*|kill(ing)?\s+(him|her|them)\w*"
+    rf"[^.?!]{{0,35}}\b({SUICIDE_REGEX}|{POISON_REGEX}|{MURDER_REGEX}|kill(ing)?\s+(him|her|them)\w*"
     r"|end(ing)?\s+(his|her|their)\s+own"
     r"|cut(ting)?\s+(him|her|them)\w*)\b"
 )
@@ -138,6 +226,17 @@ DISTRESS_PATTERNS = [
     r"\bcan'?t sleep\b",
     r"\b(tension|ghabrahat|akela|akeli)\b",
 ]
+
+# A local small model is useful for interpreting unusual wording, but it must
+# never turn a harmless greeting or study question into a crisis route.  Only
+# ask it for a second opinion when the message contains a safety-related cue
+# that the deterministic patterns did not already classify.
+LLM_REVIEW_CUES = re.compile(
+    rf"\b({SUICIDE_REGEX}|{POISON_REGEX}|{MURDER_REGEX}|self[- ]?harm|kill|kms|die|dead|ending|end it|end my life|"
+    r"hurt myself|harm myself|hang myself|jump off|hopeless\w*|worthless|burden|no point|"
+    r"can'?t go on|disappear|vanish|goodbye|final message|never wake|"
+    r"jeene|marna|mar jaana|khud ko|zindagi khatam|khoon)\b"
+)
 
 INJECTION_PATTERNS = [
     r"\bignore (all |your |the |previous |any )?(instructions|rules|guidelines|prompt)\b",
@@ -214,3 +313,8 @@ def screen(user_message: str) -> "RuleResult":
         result.reasons.append("distress")
 
     return result
+
+
+def needs_llm_review(user_message: str) -> bool:
+    """Whether a non-rule message has language worth a slower model review."""
+    return bool(LLM_REVIEW_CUES.search(normalize(user_message)))
