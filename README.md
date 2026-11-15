@@ -9,7 +9,7 @@
 [![LLM Ollama | Gemini | Groq](https://img.shields.io/badge/LLM-Ollama%20%7C%20Gemini%20%7C%20Groq-purple.svg)](https://ollama.com/)
 [![License MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-MannSahara (मन सहारा) is a production-grade AI student mental wellbeing and crisis safety companion engineered for SIH25092. Powered by a deterministic LangGraph state machine, it pairs a modern React + Tailwind web UI with a two-tier risk classification engine (deterministic typo-resilient regex rules + zero-shot LLM classifier). It dynamically screens student distress, routes emergencies directly to verified Indian crisis helplines (Tele-MANAS & 112), eliminates harmful hallucinated advice through an output validator, and operates completely offline with zero cloud leakage via local Ollama inference.
+MannSahara is a production-grade AI student mental wellbeing and crisis safety companion engineered for SIH25092. Powered by a deterministic LangGraph state machine, it pairs a modern React + Tailwind web UI with a two-tier risk classification engine (deterministic typo-resilient regex rules + zero-shot LLM classifier). It dynamically screens student distress, routes emergencies directly to verified Indian crisis helplines (Tele-MANAS & 112), eliminates harmful hallucinated advice through an output validator, and operates completely offline with zero cloud leakage via local Ollama inference.
 
 | Repository: https://github.com/suresh4330/MannSahara.git
 
