@@ -134,6 +134,8 @@ MannSahara/
 ├── data/
 │   ├── resources.json        # Verified helpline directory (Tele-MANAS, 112, Campus)
 │   └── test_cases.json       # 66 synthetic test cases across 8 categories
+├── docs/
+│   └── MannSahara_Build_Guide.pdf # Specification & architecture manual
 ├── frontend/
 │   ├── src/
 │   │   ├── App.tsx           # Single-page app with Chat, Safety, Eval & LLM pages
@@ -151,10 +153,8 @@ MannSahara/
 ├── .env.example              # Template environment configuration
 ├── .gitignore                # Git exclusion patterns
 ├── evaluate.py               # Benchmark evaluation runner
-├── make_test_cases.py        # Synthetic test scenario generator
-├── MannSahara_Build_Guide.pdf# Specification & architecture manual
 ├── requirements.txt          # Python dependencies
-├── LICENSE                   # MIT License
+├── LICENSE                   # License file
 └── README.md                 # Project documentation
 ```
 
