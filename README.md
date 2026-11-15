@@ -19,24 +19,16 @@ MannSahara is a production-grade AI student mental wellbeing and crisis safety c
 
 1. [Overview](#1-overview)
 2. [Feature Highlights](#2-feature-highlights)
-3. [What's New](#3-whats-new)
-4. [Resume Highlights](#4-resume-highlights)
-5. [Screenshots](#5-screenshots)
+3. [Safety & Risk Matrix](#3-safety--risk-matrix)
+4. [System Architecture](#4-system-architecture)
+5. [How It Works](#5-how-it-works)
 6. [Tech Stack](#6-tech-stack)
-7. [Architecture](#7-architecture)
-8. [How It Works](#8-how-it-works)
-9. [Project Structure](#9-project-structure)
-10. [Safety & Risk Matrix](#10-safety--risk-matrix)
-11. [Environment Variables](#11-environment-variables)
-12. [Run Locally](#12-run-locally)
-13. [Evaluation & Benchmark](#13-evaluation--benchmark)
-14. [Troubleshooting](#14-troubleshooting)
-15. [FAQ](#15-faq)
-16. [Contributing](#16-contributing)
-17. [Changelog](#17-changelog)
-18. [Roadmap](#18-roadmap)
-19. [Author](#19-author)
-20. [License](#20-license)
+7. [Project Structure](#7-project-structure)
+8. [Environment Variables](#8-environment-variables)
+9. [Run Locally](#9-run-locally)
+10. [Evaluation & Benchmarking](#10-evaluation--benchmarking)
+11. [Troubleshooting & FAQ](#11-troubleshooting--faq)
+12. [Author & License](#12-author--license)
 
 ---
 
@@ -45,7 +37,7 @@ MannSahara is a production-grade AI student mental wellbeing and crisis safety c
 University students face escalating pressures ranging from academic burnout and hostel adjustment to placement anxiety and emotional distress. Traditional chatbots either generate unconstrained, unsafe hallucinated responses or rely on brittle static keyword scripts.
 
 **MannSahara** bridges this critical gap as a **safety-first agentic workflow**:
-- **Non-Clinical Empathetic Support**: Provides reflective listening, grounding exercises, and student-focused coping strategies.
+- **Non-Clinical Empathetic Support**: Provides reflective listening, grounding exercises, and student-focused coping strategies without medical diagnosis.
 - **Strict Crisis Interception**: Level 3 crisis inputs (self-harm, suicide, toxic substances, violence) bypass the generative model entirely and immediately present pre-approved emergency referral templates.
 - **Academic Prototype Disclaimer**: MannSahara is not a licensed clinician, doctor, or emergency service. In acute emergencies, individuals are directed to **112** (India National Emergency) or **14416 / 1800-891-4416** (Tele-MANAS GoI). All training and benchmark test cases are strictly synthetic.
 
@@ -64,53 +56,18 @@ University students face escalating pressures ranging from academic burnout and 
 
 ---
 
-## 3. What's New
+## 3. Safety & Risk Matrix
 
-- **7-Rule Sequential Safety Classifier**: Structured zero-shot decision framework in `app/risk_llm.py` with explicit risk boundaries, conservative lower-bound defaults, and dedicated third-person crisis detection.
-- **Empathetic Student-Centric Prompting**: Refined `SUPPORT_SYSTEM` and `SAFETY_FOLLOWUP_SYSTEM` prompts in `app/nodes.py` to ground conversations in student life contexts without clinical diagnosis.
-- **Cleaned & Ordered Project Structure**: Moved documentation into `docs/MannSahara_Build_Guide.pdf`, removed redundant build debris, and streamlined directory layout.
-- **Deep Typo Resilience**: Added comprehensive regex patterns covering misspellings of critical distress terms (e.g., `sucide`, `poision`, `buliding`, `zeher`, `muder`).
-- **Truncation Guardrails**: Increased max generation tokens to 600 and added a validator rule to reject replies ending in trailing punctuation (`(`, `[`, `:`, `—`) to prevent truncated emergency numbers.
-- **Single-Port Production Serving**: FastAPI directly mounts and serves the compiled React application from `frontend/dist` on port `8000`.
-- **Privacy-First Escalation Logging**: Removed third-party SMTP dependencies to eliminate credential exposure while recording simulated crisis events in SQLite.
-
----
-
-## 4. Resume Highlights
-
-- **Agentic AI & State Machines**: Architected a stateful LangGraph conversation engine maintaining multi-turn memory, risk trajectory tracking, and persistent safety locking.
-- **Production Guardrails & Recall**: Engineered a two-tier risk classification engine achieving **100% recall** across 23 planted crisis scenarios without triggering false alarms on common student idioms (*"this exam is killing me"*).
-- **Full-Stack Engineering**: Built an asynchronous FastAPI backend paired with a high-performance React 18, TypeScript, Tailwind CSS, and Framer Motion frontend.
-- **Edge Inference Optimization**: Configured Ollama local inference (`qwen2.5:1.5b`), capping context and memory overhead to achieve sub-2-second response latency on consumer hardware.
-- **System Rigor & Benchmarking**: Authored an automated evaluation pipeline (`evaluate.py`) running 66 synthetic test cases to validate safety recall, precision, and latency metrics.
+| Risk Level | Meaning | Examples | Workflow Route | System Action |
+| :---: | :--- | :--- | :---: | :--- |
+| **0** | **Normal** | *"Hello"*, *"Can you explain grounding?"* | `support` | Empathetic conversational LLM reply. |
+| **1** | **Distress** | *"Feeling nervous about placements"*, *"Homesick"* | `support` | Active listening, validation, and coping strategies. |
+| **2** | **Ambiguous** | *"I'm a burden"*, *"My roommate wants to hurt herself"* | `checkin` | Fixed check-in template asking directly + helpline cards. |
+| **3** | **Crisis** | *"I want to kill myself"*, *"poision"*, *"push from buliding"* | `crisis` | Fixed emergency template + Tele-MANAS/112 + Sticky Safety Lock. |
 
 ---
 
-## 5. Screenshots
-
-| Chat Interface & Safety Mode | Simulated Crisis Escalation |
-| :---: | :---: |
-| Normal empathetic student support with active safety monitoring | Instant Level 3 crisis intervention displaying Tele-MANAS and 112 helplines |
-| *(Emergency referrals bypass the LLM and output verified resources)* | *(Persistent safety banner activates with zero hallucinated advice)* |
-
----
-
-## 6. Tech Stack
-
-| Domain | Technology | Purpose |
-| :--- | :--- | :--- |
-| **Frontend UI** | React 18, TypeScript, Vite | Fast, responsive single-page chat interface |
-| **Styling & Motion** | Tailwind CSS, Framer Motion, Lucide | Modern glassmorphic aesthetic & accessible UI components |
-| **Backend Framework** | FastAPI, Uvicorn, Pydantic v2 | High-throughput asynchronous REST API & static file serving |
-| **Agentic Workflow** | LangGraph, LangChain Core | Deterministic state machine, graph routing, and safety memory |
-| **Local LLM** | Ollama (`qwen2.5:1.5b`, `qwen2.5:3b`) | Offline, privacy-first on-device text generation |
-| **Cloud LLMs** | Google Gemini, Groq, OpenRouter | Optional high-speed cloud intelligence |
-| **Data & Auditing** | SQLite3, Pandas | Session persistence, turn tracking, and escalation audit logging |
-| **Testing** | Pytest, Tabulate | Unit testing (11/11 passing) and 66-case benchmark evaluation |
-
----
-
-## 7. Architecture
+## 4. System Architecture
 
 ```mermaid
 flowchart TD
@@ -143,7 +100,7 @@ flowchart TD
 
 ---
 
-## 8. How It Works
+## 5. How It Works
 
 1. **Input Normalization & Idiom Filtering**: The student's text is converted to lowercase, special punctuation is normalized, and common stress idioms (e.g., *"this assignment is killing me"*, *"dead tired"*) are stripped to prevent false escalations.
 2. **Layer 1 Deterministic Screening**: Text is evaluated against regex suites covering suicide, poison ingestion, high falls, violent harm, and Hinglish crisis phrases. Unambiguous crisis triggers immediately yield Level 3.
@@ -153,11 +110,26 @@ flowchart TD
    - **Level 2 (Ambiguous)**: Routes to `checkin`. Asks directly about safety while offering helpline contacts.
    - **Level 0–1 (Normal/Distress)**: Routes to `support`. Generates an empathetic, non-diagnostic response.
 5. **Output Validation & Safe Fallback**: Generated replies are scanned against banned tokens (medication suggestions, diagnostic terms, false claims of calling authorities). If violated twice, the system substitutes a safe pre-approved fallback.
-6. **Persistence**: The turn details, timestamps, risk level, route, and triggers are stored in `mannsahara.db`.
+6. **Persistence**: Turn details, timestamps, risk level, route, and triggers are stored locally in `mannsahara.db`.
 
 ---
 
-## 9. Project Structure
+## 6. Tech Stack
+
+| Domain | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend UI** | React 18, TypeScript, Vite | Fast, responsive single-page chat interface |
+| **Styling & Motion** | Tailwind CSS, Framer Motion, Lucide | Modern clean aesthetic & accessible UI components |
+| **Backend Framework** | FastAPI, Uvicorn, Pydantic v2 | High-throughput asynchronous REST API & static file serving |
+| **Agentic Workflow** | LangGraph, LangChain Core | Deterministic state machine, graph routing, and safety memory |
+| **Local LLM** | Ollama (`qwen2.5:1.5b`, `qwen2.5:3b`) | Offline, privacy-first on-device text generation |
+| **Cloud LLMs** | Google Gemini, Groq, OpenRouter | Optional high-speed cloud intelligence |
+| **Data & Auditing** | SQLite3, Pandas | Session persistence, turn tracking, and escalation audit logging |
+| **Testing** | Pytest, Tabulate | Unit testing (11/11 passing) and 66-case benchmark evaluation |
+
+---
+
+## 7. Project Structure
 
 ```
 MannSahara/
@@ -200,24 +172,13 @@ MannSahara/
 ├── .gitignore                # Git exclusion patterns
 ├── evaluate.py               # 66-case benchmark evaluation script
 ├── requirements.txt          # Python dependencies
-├── LICENSE                   # Project license
+├── LICENSE                   # MIT License
 └── README.md                 # Project documentation
 ```
 
 ---
 
-## 10. Safety & Risk Matrix
-
-| Risk Level | Meaning | Examples | Workflow Route | System Action |
-| :---: | :--- | :--- | :---: | :--- |
-| **0** | **Normal** | *"Hello"*, *"Can you explain grounding?"* | `support` | Empathetic conversational LLM reply. |
-| **1** | **Distress** | *"Feeling nervous about placements"*, *"Homesick"* | `support` | Active listening, validation, and coping strategies. |
-| **2** | **Ambiguous** | *"I'm a burden"*, *"My roommate wants to hurt herself"* | `checkin` | Fixed check-in template asking directly + helpline cards. |
-| **3** | **Crisis** | *"I want to kill myself"*, *"poision"*, *"push from buliding"* | `crisis` | Fixed emergency template + Tele-MANAS/112 + Sticky Safety Lock. |
-
----
-
-## 11. Environment Variables
+## 8. Environment Variables
 
 Create a `.env` file in the project root by copying `.env.example`:
 
@@ -240,7 +201,7 @@ cp .env.example .env
 
 ---
 
-## 12. Run Locally
+## 9. Run Locally
 
 ### Prerequisites
 - **Python 3.10+**
@@ -295,7 +256,7 @@ Open **[http://localhost:5173](http://localhost:5173)** in your browser.
 
 ---
 
-## 13. Evaluation & Benchmark
+## 10. Evaluation & Benchmarking
 
 MannSahara includes a complete synthetic benchmarking suite (`evaluate.py`) evaluating 66 scenarios (including 23 planted crisis events, prompt injection tests, and idioms).
 
@@ -322,19 +283,18 @@ python evaluate.py --split all --mode hybrid
 
 ---
 
-## 14. Troubleshooting
+## 11. Troubleshooting & FAQ
+
+### Troubleshooting
 
 | Issue | Cause | Solution |
 | :--- | :--- | :--- |
 | `curl: (7) Failed to connect to 127.0.0.1:11434` | Ollama service is not running | Run `ollama serve` in a background terminal. |
 | `Response ends with dangling '(' or '—'` | Token ceiling too small | Set `LLM_MAX_OUTPUT_TOKENS=600` in `.env`. |
-| `WinError 5: Access is denied on OneDrive` | OneDrive lock or sandbox restriction | Run commands with administrative shell permissions. |
 | `Port 8000 already in use` | Previous uvicorn instance active | Run `taskkill /F /IM python.exe` (Windows) or `lsof -i :8000`. |
 | `Cannot find module 'lucide-react'` | Incomplete npm install | Run `cd frontend && npm install` to install node modules. |
 
----
-
-## 15. FAQ
+### FAQ
 
 **Q: Why LangGraph instead of simple sequential prompts?**  
 A: LangGraph provides a stateful directed graph with conditional branching, multi-turn risk memory, and deterministic safety locks that cannot be bypassed by raw LLM hallucinations.
@@ -350,45 +310,8 @@ A: The Layer 1 regex engine includes typo-tolerant patterns (`sucide`, `poision`
 
 ---
 
-## 16. Contributing
+## 12. Author & License
 
-Contributions are welcome! Please follow these steps:
-1. Fork the repository (`https://github.com/suresh4330/MannSahara.git`).
-2. Create a feature branch: `git checkout -b feature/AmazingSafetyRule`.
-3. Verify all unit tests pass: `python -m pytest tests/`.
-4. Commit your changes: `git commit -m "Add new safety validation rule"`.
-5. Push to the branch: `git push origin feature/AmazingSafetyRule`.
-6. Open a Pull Request.
-
----
-
-## 17. Changelog
-
-- **v1.4.0** *(Current)*: 7-rule sequential safety classification prompt in `risk_llm.py`, student-centered empathetic prompting in `nodes.py`, conservative risk boundaries, refined crisis templates, organized folder structure (`docs/`), and updated complete README.
-- **v1.3.0**: Typo-resilient regex rules, raised token limit to 600, single-port static frontend serving, verified Indian emergency contacts, updated complete README.
-- **v1.2.0**: Migrated to React 18 + Tailwind CSS frontend, added FastAPI adapter, introduced runtime multi-provider switcher.
-- **v1.1.0**: Implemented Layer 2 zero-shot LLM classifier, persistent sticky safety lock, and idiom filtering.
-- **v1.0.0**: Initial SIH25092 LangGraph architecture, synthetic dataset benchmark, SQLite audit logging.
-
----
-
-## 18. Roadmap
-
-- [ ] **Voice Support**: Implement real-time voice-to-text and speech output for hands-free accessibility.
-- [ ] **Indian Regional Languages**: Expand crisis patterns to Hindi, Telugu, Tamil, and Bengali.
-- [ ] **Campus SSO Integration**: Secure Single Sign-On integration for participating colleges and universities.
-- [ ] **Automated SMS Dispatch**: Optional hardware GSM module integration to alert campus counsellors offline.
-
----
-
-## 19. Author
-
-**Suresh**  
-- **GitHub**: [@suresh4330](https://github.com/suresh4330)  
-- **Project Link**: [https://github.com/suresh4330/MannSahara](https://github.com/suresh4330/MannSahara)
-
----
-
-## 20. License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+- **Author**: Suresh ([@suresh4330](https://github.com/suresh4330))
+- **Repository**: [https://github.com/suresh4330/MannSahara](https://github.com/suresh4330/MannSahara)
+- **License**: Licensed under the [MIT License](LICENSE).
