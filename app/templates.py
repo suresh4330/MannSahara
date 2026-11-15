@@ -16,7 +16,7 @@ def crisis_reply():
         "now or go to the nearest hospital, and try not to be alone.\n\n"
         "You can also talk to a trained person right away:\n"
         f"{format_resources()}\n\n"
-        "Is there someone you trust (a friend, family member, hostel warden or counsellor) "
+        "Is there someone you trust — a friend, family member, hostel warden or counsellor — "
         "who you can contact right now? I'm here and happy to keep talking while you reach out."
     )
 
@@ -34,7 +34,7 @@ def checkin_reply(third_person: bool = False):
     return (
         "Thank you for sharing that with me. It sounds really heavy, and I want to make sure "
         "I understand. Are you having thoughts of harming yourself or ending your life?\n\n"
-        "Whatever your answer is, you don't have to handle this alone. If you would like to "
+        "Whatever your answer, you don't have to handle this alone. If you would like to "
         "talk to someone, here are some options:\n"
         f"{format_resources()}"
     )

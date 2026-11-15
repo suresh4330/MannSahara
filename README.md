@@ -66,6 +66,8 @@ University students face escalating pressures ranging from academic burnout and 
 
 ## 3. What's New
 
+- **7-Rule Sequential Safety Classifier**: Structured zero-shot decision tree in `app/risk_llm.py` with explicit risk level definitions, conservative lower-bound defaults when in doubt, and dedicated third-person crisis detection.
+- **Empathetic Student-Centric Prompting**: Refined `SUPPORT_SYSTEM` and `SAFETY_FOLLOWUP_SYSTEM` prompts in `app/nodes.py` providing grounded empathy for student realities (academic pressure, exam nerves, hostel life) while rejecting self-harm and burden premises.
 - **Deep Typo Resilience**: Added comprehensive regex patterns covering misspellings of critical distress terms (e.g., `sucide`, `poision`, `buliding`, `zeher`, `muder`).
 - **Truncation Guardrails**: Increased max generation tokens to 600 and added a validator rule to reject replies ending in trailing punctuation (`(`, `[`, `:`, `—`) to prevent truncated emergency numbers.
 - **Single-Port Production Serving**: FastAPI directly mounts and serves the compiled React application from `frontend/dist` on port `8000`.
@@ -180,10 +182,11 @@ MannSahara/
 │   └── test_cases.json       # 66 synthetic developer test cases
 ├── frontend/
 │   ├── src/                  # React 18 + TypeScript source code
-│   │   ├── components/       # UI components (Header, ChatMessage, SafetyBadge)
-│   │   ├── pages/            # View pages (ChatView, SafetyOverview, Settings)
-│   │   ├── App.tsx           # Main application shell & routing
-│   │   └── api.ts            # Frontend API client
+│   │   ├── App.tsx           # Main application shell, view routing & model switcher
+│   │   ├── api.ts            # Typed REST API client & backend connection handler
+│   │   ├── index.css         # Tailwind directives & design system styling
+│   │   ├── main.tsx          # Application entry point & DOM bootstrap
+│   │   └── vite-env.d.ts     # Client TypeScript environment declarations
 │   ├── index.html            # HTML entry point
 │   ├── package.json          # Frontend dependencies & scripts
 │   ├── tailwind.config.js    # Tailwind styling configuration
@@ -361,7 +364,8 @@ Contributions are welcome! Please follow these steps:
 
 ## 17. Changelog
 
-- **v1.3.0** *(Current)*: Typo-resilient regex rules, raised token limit to 600, single-port static frontend serving, verified Indian emergency contacts, updated complete README.
+- **v1.4.0** *(Current)*: 7-rule sequential safety classification prompt in `risk_llm.py`, student-centered empathetic prompting in `nodes.py`, conservative risk boundaries, refined crisis templates, and updated project documentation.
+- **v1.3.0**: Typo-resilient regex rules, raised token limit to 600, single-port static frontend serving, verified Indian emergency contacts, updated complete README.
 - **v1.2.0**: Migrated to React 18 + Tailwind CSS frontend, added FastAPI adapter, introduced runtime multi-provider switcher.
 - **v1.1.0**: Implemented Layer 2 zero-shot LLM classifier, persistent sticky safety lock, and idiom filtering.
 - **v1.0.0**: Initial SIH25092 LangGraph architecture, synthetic dataset benchmark, SQLite audit logging.
