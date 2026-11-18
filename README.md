@@ -268,7 +268,7 @@ Output: **11 passed in ~1.5s (100%)**
 
 ### Run 66-Case Benchmark
 ```bash
-# Rule-based evaluation (runs 100% offline without API calls)
+# Rule-based evaluation (runs locally without API calls)
 python evaluate.py --split all --mode rules
 
 # Hybrid evaluation (rules + LLM classifier)
