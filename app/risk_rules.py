@@ -80,6 +80,14 @@ CRISIS_PATTERNS = [
     ("kill_myself", r"\b(kill(ing)?\s+(myself|myslf)|kms)\b", False),
     ("end_life", r"\b(end|ending|take|taking)\s+(my|my own)\s+life\b", False),
     ("end_it_all", r"\bend(ing)?\s+it\s+all\b", False),
+    ("make_everything_stop",
+     r"\b(make|making)\s+(everything|it\s+all|it|the\s+pain)\s+(to\s+)?stop\s+(for\s+good|permanently|forever)\b"
+     r"|\b(thinking|thought|thoughts|plan|planning|want|wanna)\s+[^.?!]{0,30}\bmake\s+(everything|it\s+all|it|the\s+pain)\s+stop\b",
+     False),
+    ("worry_after_this",
+     r"\b(won'?t|not)\s+(need\s+to|have\s+to)\s+worry\s+about\s+anything\s+after\s+(this|today|tonight)\b"
+     r"|\b(last\s+semester|last\s+year|last\s+day)\b[^.?!]{0,40}\bwon'?t\s+need\s+to\s+worry\b",
+     False),
     ("thinking_of_ending",
      rf"\b(thinking|thought|thoughts)\s+(of|about)\s+(ending|killing|hurting)\s+"
      rf"(it all|my life|myself|{SUICIDE_REGEX})\b",
@@ -130,6 +138,9 @@ CRISIS_PATTERNS = [
     ("hi_suicide_karna", rf"\b{SUICIDE_REGEX}\s+kar(na|ne|unga|ungi|u)\b", False),
     ("hi_jaan_de", r"\bjaan (de|dena)\s+(dun|du|dunga|dungi)\b", False),
     ("hi_main_na_rahun", r"\bmain na (rahu|rahun|rahoon|raha|rahi)\b", False),
+    ("hi_sab_khatam_kar",
+     r"\b(main\s+)?(yeh\s+|ye\s+)?sab\s+khatam\s+kar\s*(dunga|dungi|dun|du|dena|de)\b",
+     False),
     ("hi_jeene_mann_nahi", r"\bjeene ka mann nahi\b", False),
     ("hi_mujhe_suicide", rf"\bmujhe\s+{SUICIDE_REGEX}\b", False),
 
