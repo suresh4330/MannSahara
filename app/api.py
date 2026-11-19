@@ -33,10 +33,10 @@ store = Store()
 conversations: dict[str, Chatbot] = {}
 
 PROVIDERS = {
-    "ollama": {"label": "Ollama (Local)", "models": ["qwen2.5:1.5b", "qwen2.5:3b", "qwen2.5:7b"], "key": None},
-    "gemini": {"label": "Google Gemini", "models": ["gemini-3-flash-preview", "gemini-3.5-flash", "gemini-3.5-flash-lite"], "key": "GEMINI_API_KEY"},
     "groq": {"label": "Groq", "models": ["qwen/qwen3.8-27b", "openai/gpt-oss-20b"], "key": "GROQ_API_KEY"},
-    "openrouter": {"label": "OpenRouter", "models": ["liquid/lfm-2.5-2.6b:free", "openrouter/free"], "key": "OPENROUTER_API_KEY"},
+    "gemini": {"label": "Google Gemini", "models": ["gemini-3-flash-preview"], "key": "GEMINI_API_KEY"},
+    "openrouter": {"label": "OpenRouter", "models": ["openrouter/free"], "key": "OPENROUTER_API_KEY"},
+    "ollama": {"label": "Ollama (Local)", "models": ["qwen2.5:1.5b", "qwen2.5:3b"], "key": None},
 }
 
 

@@ -30,14 +30,12 @@ function useBackend() {
 }
 
 const PRESET_PROVIDERS = [
-  { id: "ollama-1.5b", provider: "ollama", label: "Ollama (Fast · 1.5B)", model: "qwen2.5:1.5b" },
-  { id: "ollama-3b", provider: "ollama", label: "Ollama (Local · 3B)", model: "qwen2.5:3b" },
-  { id: "gemini", provider: "gemini", label: "Google Gemini", model: "gemini-3-flash-preview" },
-  { id: "gemini-35", provider: "gemini", label: "Google Gemini (3.5 Flash)", model: "gemini-3.5-flash" },
-  { id: "groq", provider: "groq", label: "Groq", model: "qwen/qwen3.8-27b" },
-  { id: "groq-oss", provider: "groq", label: "Groq (GPT-OSS)", model: "openai/gpt-oss-20b" },
-  { id: "openrouter-lfm", provider: "openrouter", label: "OpenRouter (Liquid LFM)", model: "liquid/lfm-2.5-2.6b:free" },
-  { id: "openrouter", provider: "openrouter", label: "OpenRouter (Auto Free)", model: "openrouter/free" },
+  { id: "groq-fast", provider: "groq", label: "Groq (Ultra-Fast · 0.3s)", model: "qwen/qwen3.8-27b" },
+  { id: "gemini-flash", provider: "gemini", label: "Google Gemini (Flash)", model: "gemini-3-flash-preview" },
+  { id: "groq-oss", provider: "groq", label: "Groq (GPT-OSS · 0.8s)", model: "openai/gpt-oss-20b" },
+  { id: "openrouter-free", provider: "openrouter", label: "OpenRouter (Auto Free)", model: "openrouter/free" },
+  { id: "ollama-1.5b", provider: "ollama", label: "Ollama (Local Offline · 1.5B)", model: "qwen2.5:1.5b" },
+  { id: "ollama-3b", provider: "ollama", label: "Ollama (Local Offline · 3B)", model: "qwen2.5:3b" },
 ];
 
 function ModelSwitcher({ config, onChange }: { config: LlmConfig | null; onChange: (c: LlmConfig) => void }) {

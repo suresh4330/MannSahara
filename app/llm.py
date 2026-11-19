@@ -8,9 +8,9 @@ from urllib import request
 from . import config
 
 DEFAULT_MODELS = {
-    "gemini": "gemini-3-flash-preview",
     "groq": "qwen/qwen3.8-27b",
-    "openrouter": "liquid/lfm-2.5-2.6b:free",
+    "gemini": "gemini-3-flash-preview",
+    "openrouter": "openrouter/free",
     "ollama": "qwen2.5:1.5b",
 }
 
@@ -37,7 +37,7 @@ def _mock(system: str, json_mode: bool):
 def _gemini(system, messages, json_mode, temperature, model):
     from google import genai
     from google.genai import types
-    client = genai.Client(api_key=config.GEMINI_API_KEY)
+    client = genai.Client(api_key=config.GEMINI_API_KEY, http_options={"timeout": config.LLM_TIMEOUT_SECONDS * 1000})
     contents = [
         types.Content(
             role="user" if m["role"] == "user" else "model",
