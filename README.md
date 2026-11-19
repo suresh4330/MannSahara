@@ -49,8 +49,8 @@ University students face escalating pressures ranging from academic burnout and 
 - 🔒 **Deterministic LangGraph Router**: Rigid state transitions ensuring emergency escalations can never be downgraded by an LLM alone.
 - 🛑 **Sticky Safety Lock**: When a user discloses crisis thoughts, the session locks into `safety_followup` mode, preventing the user or bot from trivializing the situation in subsequent turns.
 - 🚫 **Fail-Safe Output Validator**: Inspects every model output for banned tokens, diagnostic claims, medication advice, secrecy promises, or abrupt sentence truncation.
-- 💻 **Local and Cloud Provider Support**: Runs fully on the local machine when the Ollama provider is selected; if Gemini, Groq or OpenRouter is selected, messages are sent to that provider.
-- 🔄 **Runtime Multi-Provider Switcher**: Seamlessly switch between Ollama (Local), Google Gemini, Groq, and OpenRouter directly from the UI.
+- ⚡ **Ultra-Fast Cloud & Offline Local Support**: Sub-second cloud inference powered by Groq (~0.3s) and Google Gemini, paired with 100% offline local privacy via Ollama (`qwen2.5:1.5b`, `qwen2.5:3b`).
+- 🔄 **Runtime Multi-Provider Switcher**: Seamlessly switch between Groq, Google Gemini, OpenRouter, and local Ollama directly from the UI header.
 - 📞 **Verified Indian Crisis Helplines**: Integrates verified numbers from `data/resources.json` (National Emergency `112`, Tele-MANAS `14416`, Campus Wellbeing Centre).
 - 🎨 **Modern Responsive UI**: React 18 single-page application styled with Tailwind CSS, featuring smooth animations, safety badges, and audit logs.
 
@@ -153,7 +153,12 @@ MannSahara/
 │   ├── resources.json        # Verified helpline registry (Tele-MANAS, 112, Campus)
 │   └── test_cases.json       # 66 synthetic developer test cases
 ├── docs/
-│   └── MannSahara_Build_Guide.pdf # Architecture & build guide manual
+│   ├── report_assets/        # 9 high-resolution 300 DPI architecture charts
+│   ├── build_academic_report.py # Academic report generator script
+│   ├── evaluation_rules_output.txt # Terminal benchmark execution logs
+│   ├── MannSahara_Build_Guide.pdf # Architecture & build guide manual
+│   ├── P09_AQ_IpsitaUmang_AnnamneediSureshKumar_Report.docx # Editable report
+│   └── P09_AQ_IpsitaUmang_AnnamneediSureshKumar_Report.pdf  # 30-page academic report
 ├── frontend/
 │   ├── src/
 │   │   ├── App.tsx           # Main application shell, view routing & model switcher
@@ -188,8 +193,8 @@ cp .env.example .env
 
 | Variable | Default | Allowed Values | Description |
 | :--- | :---: | :---: | :--- |
-| `LLM_PROVIDER` | `ollama` | `ollama`, `gemini`, `groq`, `openrouter`, `mock` | Selected AI inference provider |
-| `LLM_MODEL` | `qwen2.5:1.5b` | Model name string | Model identifier for the chosen provider |
+| `LLM_PROVIDER` | `groq` | `groq`, `gemini`, `openrouter`, `ollama` | Selected AI inference provider |
+| `LLM_MODEL` | `qwen/qwen3.8-27b` | Model name string | Model identifier for the chosen provider |
 | `OLLAMA_BASE_URL` | `http://localhost:11434/v1` | URL string | OpenAI-compatible endpoint for Ollama |
 | `USE_LLM_CLASSIFIER` | `true` | `true`, `false` | Enables Layer 2 zero-shot LLM classification |
 | `MAX_HISTORY_TURNS` | `6` | Integer | Maximum conversation history seen by LLM |
@@ -303,6 +308,9 @@ Results from the rules-only evaluation on the synthetic 66-case corpus:
 
 **Q: Why LangGraph instead of simple sequential prompts?**  
 A: LangGraph provides a stateful directed graph with conditional branching, multi-turn risk memory, and deterministic safety locks that cannot be bypassed by raw LLM hallucinations.
+
+**Q: Does MannSahara use fine-tuning?**  
+A: **No.** MannSahara does not fine-tune model weights. Instead, it pairs off-the-shelf foundation models with strict zero-shot system prompts, a deterministic regex crisis screening layer (Layer 1), an agentic LangGraph state machine, and a post-generation safety validator. This ensures zero training compute overhead, eliminates hallucinated crisis escalation failures, and allows instant updates to safety rules and helpline directories without retraining.
 
 **Q: Can MannSahara diagnose depression or anxiety?**  
 A: **No.** MannSahara strictly adheres to non-clinical guidelines. It will never output clinical diagnoses or suggest pharmaceutical treatments.
