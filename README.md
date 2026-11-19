@@ -156,8 +156,7 @@ MannSahara/
 │   ├── report_assets/        # 9 high-resolution 300 DPI architecture charts
 │   ├── build_academic_report.py # Academic report generator script
 │   ├── evaluation_rules_output.txt # Terminal benchmark execution logs
-│   ├── MannSahara_Build_Guide.pdf # Architecture & build guide manual
-│   └── P09_AQ_IpsitaUmang_AnnamneediSureshKumar_Report.pdf  # 30-page academic report
+│   └── MannSahara_Build_Guide.pdf # Architecture & build guide manual
 ├── frontend/
 │   ├── src/
 │   │   ├── App.tsx           # Main application shell, view routing & model switcher
@@ -175,8 +174,10 @@ MannSahara/
 ├── .env.example              # Example environment configuration
 ├── .gitignore                # Git exclusion patterns
 ├── evaluate.py               # 66-case benchmark evaluation script
+├── generate_report_charts.py # High-res report charts generator script
 ├── requirements.txt          # Python dependencies
 ├── LICENSE                   # MIT License
+├── P09_AQ_IpsitaUmang_AnnamneediSureshKumar_Report.pdf # 31-page academic project report
 └── README.md                 # Project documentation
 ```
 
