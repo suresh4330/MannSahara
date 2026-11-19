@@ -33,3 +33,6 @@ frontend/vite.config.js
 frontend/vite.config.d.ts
 *.tsbuildinfo
 .vite/
+
+# Documents (Keep PDF, ignore DOCX)
+*.docx

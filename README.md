@@ -157,7 +157,6 @@ MannSahara/
 │   ├── build_academic_report.py # Academic report generator script
 │   ├── evaluation_rules_output.txt # Terminal benchmark execution logs
 │   ├── MannSahara_Build_Guide.pdf # Architecture & build guide manual
-│   ├── P09_AQ_IpsitaUmang_AnnamneediSureshKumar_Report.docx # Editable report
 │   └── P09_AQ_IpsitaUmang_AnnamneediSureshKumar_Report.pdf  # 30-page academic report
 ├── frontend/
 │   ├── src/
